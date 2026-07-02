@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemesanan Online - Geprek Hot</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-extrabold text-red-600 tracking-wider">GEPREK<span class="text-amber-500">HOT</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 font-semibold text-gray-600">
+                    <a href="index.html" class="hover:text-red-600 transition">Home</a>
+                    <a href="tentang.html" class="hover:text-red-600 transition">Tentang Kami</a>
+                    <a href="katalog.html" class="hover:text-red-600 transition">Katalog Menu</a>
+                    <a href="index.html#kemitraan" class="hover:text-red-600 transition">Kemitraan</a>
+                   
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-red-600 to-amber-500 text-white py-12 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Formulir Pemesanan Online</h1>
+            <p class="text-amber-100 mt-2 text-sm sm:text-base">Isi detail pesananmu di bawah ini, total harga akan otomatis terhitung.</p>
+        </div>
+    </header>
+
+    <!-- FORM PEMESANAN -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- KOLOM KIRI & TENGAH: DETAIL FORM & MENU (2 Bagian) -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- 1. Data Pelanggan -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-user text-red-600"></i> Informasi Pelanggan
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+                            <input type="text" id="nama" placeholder="Masukkan nama Anda" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nomor WhatsApp</label>
+                            <input type="tel" id="whatsapp" placeholder="Contoh: 081234567xxx" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm" required>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Metode Pengambilan</label>
+                            <select id="metode" onchange="toggleAlamat()" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm text-gray-600">
+                                <option value="Delivery">Kirim ke Rumah (Delivery)</option>
+                                <option value="Takeaway">Bungkus / Ambil Sendiri (Takeaway)</option>
+                            </select>
+                        </div>
+                        <div id="box-alamat">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Alamat Lengkap Pengiriman</label>
+                            <textarea id="alamat" rows="1" placeholder="Nama jalan, nomor rumah, RT/RW..." class="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm resize-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Pilih Menu -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+                    <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-utensils text-red-600"></i> Pilih Menu & Tentukan Jumlah
+                    </h3>
+                    
+                    <div class="divide-y divide-gray-100">
+                        <!-- Menu Item 1 -->
+                        <div class="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Geprek Original Hot</h4>
+                                <p class="text-xs text-red-600 font-semibold mt-0.5">Rp 15.000</p>
+                            </div>
+                            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                <select class="level-select px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-600 focus:outline-none">
+                                    <option value="Lvl 0">Lvl 0 (Tidak Pedas)</option>
+                                    <option value="Lvl 1">Lvl 1 (Sedang)</option>
+                                    <option value="Lvl 3" selected>Lvl 3 (Pedas)</option>
+                                    <option value="Lvl 5">Lvl 5 (Hot Maksimal)</option>
+                                </select>
+                                <input type="number" min="0" value="0" onchange="hitungTotal()" class="menu-qty w-20 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-center font-bold text-sm focus:outline-none focus:border-red-500" data-harga="15000" data-nama="Geprek Original Hot">
+                            </div>
+                        </div>
+
+                        <!-- Menu Item 2 -->
+                        <div class="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Geprek Melted Cheese</h4>
+                                <p class="text-xs text-red-600 font-semibold mt-0.5">Rp 22.000</p>
+                            </div>
+                            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                <select class="level-select px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-600 focus:outline-none">
+                                    <option value="Lvl 0">Lvl 0</option>
+                                    <option value="Lvl 1">Lvl 1</option>
+                                    <option value="Lvl 3" selected>Lvl 3</option>
+                                    <option value="Lvl 5">Lvl 5</option>
+                                </select>
+                                <input type="number" min="0" value="0" onchange="hitungTotal()" class="menu-qty w-20 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-center font-bold text-sm focus:outline-none focus:border-red-500" data-harga="22000" data-nama="Geprek Melted Cheese">
+                            </div>
+                        </div>
+
+                        <!-- Menu Item 3 -->
+                        <div class="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Geprek Sambal Matah</h4>
+                                <p class="text-xs text-red-600 font-semibold mt-0.5">Rp 17.000</p>
+                            </div>
+                            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                <span class="text-xs text-gray-400 italic">Sambal Standar</span>
+                                <input type="number" min="0" value="0" onchange="hitungTotal()" class="menu-qty w-20 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-center font-bold text-sm focus:outline-none focus:border-red-500" data-harga="17000" data-nama="Geprek Sambal Matah">
+                            </div>
+                        </div>
+
+                        <!-- Menu Item 4 -->
+                        <div class="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Es Teh Manis Jumbo</h4>
+                                <p class="text-xs text-red-600 font-semibold mt-0.5">Rp 5.000</p>
+                            </div>
+                            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                <span class="text-xs text-gray-400 italic">Segar</span>
+                                <input type="number" min="0" value="0" onchange="hitungTotal()" class="menu-qty w-20 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-center font-bold text-sm focus:outline-none focus:border-red-500" data-harga="5000" data-nama="Es Teh Manis Jumbo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: RINGKASAN & SUBMIT (1 Bagian) -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-24 space-y-6">
+                    <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3">Ringkasan Pesanan</h3>
+                    
+                    <div id="ringkasan-list" class="text-sm text-gray-600 space-y-2">
+                        <p class="text-gray-400 italic">Belum ada menu yang dipilih...</p>
+                    </div>
+
+                    <div class="border-t border-gray-100 pt-4 space-y-3">
+                        <div class="flex justify-between font-semibold text-gray-900">
+                            <span>Total Harga:</span>
+                            <span id="total-harga" class="text-red-600 font-extrabold text-lg">Rp 0</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">*Belum termasuk ongkos kirim jika memilih metode Delivery.</p>
+                    </div>
+
+                   <div>
+                        <a href="/pembayaran.html" class="bg-red-600 text-white px-5 py-2.5 rounded-full ...">Bayar Sekarang</a></div>
+            
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-xs">
+        <p>&copy; 2026 Geprek Hot Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Sembunyikan atau tampilkan input alamat berdasarkan metode kirim
+        function toggleAlamat() {
+            const metode = document.getElementById('metode').value;
+            const boxAlamat = document.getElementById('box-alamat');
+            if (metode === 'Takeaway') {
+                boxAlamat.classList.add('hidden');
+            } else {
+                boxAlamat.classList.remove('hidden');
+            }
+        }
+
+        // Kalkulasi Harga Otomatis & Perbarui Tampilan Ringkasan
+        function hitungTotal() {
+            const qtyInputs = document.querySelectorAll('.menu-qty');
+            let total = 0;
+            let ringkasanHtml = '';
+
+            qtyInputs.forEach((input) => {
+                const qty = parseInt(input.value) || 0;
+                if (qty > 0) {
+                    const nama = input.getAttribute('data-nama');
+                    const harga = parseInt(input.getAttribute('data-harga'));
+                    const subtotal = qty * harga;
+                    total += subtotal;
+
+                    // Cari elemen tingkatan pedas di baris menu yang sama (jika ada)
+                    const row = input.closest('.flex');
+                    const levelSelect = row.querySelector('.level-select');
+                    const levelText = levelSelect ? ` (${levelSelect.value})` : '';
+
+                    ringkasanHtml += `
+                        <div class="flex justify-between text-sm">
+                            <span>${nama}${levelText} <strong class="text-gray-900">x${qty}</strong></span>
+                            <span class="font-medium text-gray-900">Rp ${subtotal.toLocaleString('id-ID')}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('total-harga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('ringkasan-list').innerHTML = ringkasanHtml || '<p class="text-gray-400 italic">Belum ada menu yang dipilih...</p>';
+        }
+
+        // Jalankan fungsi pengiriman teks pesanan rapi ke WhatsApp tujuan
+        function kirimWhatsApp() {
+            const nama = document.getElementById('nama').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const metode = document.getElementById('metode').value;
+            const alamat = document.getElementById('alamat').value.trim();
+            
+            if (!nama || !whatsapp) {
+                alert('Mohon lengkapi Nama dan No WhatsApp Anda terlebih dahulu.');
+                return;
+            }
+
+            if (metode === 'Delivery' && !alamat) {
+                alert('Mohon isi alamat lengkap pengiriman paket.');
+                return;
+            }
+
+            const qtyInputs = document.querySelectorAll('.menu-qty');
+            let itemText = '';
+            let total = 0;
+            let totalItemCount = 0;
+
+            qtyInputs.forEach((input) => {
+                const qty = parseInt(input.value) || 0;
+                if (qty > 0) {
+                    totalItemCount++;
+                    const namaMenu = input.getAttribute('data-nama');
+                    const harga = parseInt(input.getAttribute('data-harga'));
+                    
+                    const row = input.closest('.flex');
+                    const levelSelect = row.querySelector('.level-select');
+                    const levelText = levelSelect ? ` [${levelSelect.value}]` : '';
+
+                    itemText += `- ${namaMenu}${levelText} x${qty} = Rp ${(qty * harga).toLocaleString('id-ID')}\n`;
+                    total += (qty * harga);
+                }
+            });
+
+            if (totalItemCount === 0) {
+                alert('Pilih minimal 1 menu sebelum melakukan pemesanan.');
+                return;
+            }
+
+            // Atur format text WhatsApp
+            let teksWA = `*PESANAN BARU - GEPREK HOT*\n\n`;
+            teksWA += `*Detail Pelangan:*\n`;
+            teksWA += `• Nama: ${nama}\n`;
+            teksWA += `• WA: ${whatsapp}\n`;
+            teksWA += `• Metode: ${metode}\n`;
+            if (metode === 'Delivery') {
+                teksWA += `• Alamat: ${alamat}\n`;
+            }
+            teksWA += `\n*Daftar Menu:*\n${itemText}\n`;
+            teksWA += `*Total Pembayaran:* Rp ${total.toLocaleString('id-ID')}\n\n`;
+            teksWA += `Mohon segera diproses ya min, Terima kasih!`;
+
+            // Ganti nomor di bawah dengan No WA Admin Toko aslimu (gunakan kode negara 62)
+            const nomorAdmin = "628123456789"; 
+            const linkWhatsApp = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(teksWA)}`;
+            
+            // Buka tab link WhatsApp baru
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+
+</body>
+</html>

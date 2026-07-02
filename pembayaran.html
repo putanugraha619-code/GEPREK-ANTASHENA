@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Pembayaran - Geprek Hot</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-extrabold text-red-600 tracking-wider">GEPREK<span class="text-amber-500">HOT</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 font-semibold text-gray-600">
+                    <a href="index.html" class="hover:text-red-600 transition">Home</a>
+                    <a href="tentang.html" class="hover:text-red-600 transition">Tentang Kami</a>
+                    <a href="katalog.html" class="hover:text-red-600 transition">Katalog Menu</a>
+                    <a href="index.html#kemitraan" class="hover:text-red-600 transition">Kemitraan</a>
+                   
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-red-600 to-amber-500 text-white py-12 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Instruksi Pembayaran</h1>
+            <p class="text-amber-100 mt-2 text-sm sm:text-base">Selesaikan pembayaranmu agar pesanan ayam krispi bisa langsung kami ulek harian!</p>
+        </div>
+    </header>
+
+    <!-- UTAMA: PROSES BAYAR -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- KOLOM KIRI: METODE & DETAIL (2 Bagian) -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Pilihan Metode -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+                    <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-credit-card text-red-600"></i> Pilih Metode Pembayaran
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <!-- Transfer Bank -->
+                        <label class="border-2 border-red-600 rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:bg-red-50/50 transition relative group">
+                            <input type="radio" name="payment_method" value="bank" checked onchange="switchMethod('bank')" class="accent-red-600 h-4 w-4">
+                            <div>
+                                <span class="block font-bold text-sm text-gray-900">Transfer Bank</span>
+                                <span class="text-xs text-gray-500">BCA, Mandiri, BRI</span>
+                            </div>
+                        </label>
+                        <!-- QRIS -->
+                        <label class="border border-gray-200 rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:border-red-500 hover:bg-red-50/50 transition">
+                            <input type="radio" name="payment_method" value="qris" onchange="switchMethod('qris')" class="accent-red-600 h-4 w-4">
+                            <div>
+                                <span class="block font-bold text-sm text-gray-900">QRIS / E-Wallet</span>
+                                <span class="text-xs text-gray-500">Gana, OVO, GoPay</span>
+                            </div>
+                        </label>
+                        <!-- COD -->
+                        <label class="border border-gray-200 rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:border-red-500 hover:bg-red-50/50 transition">
+                            <input type="radio" name="payment_method" value="cod" onchange="switchMethod('cod')" class="accent-red-600 h-4 w-4">
+                            <div>
+                                <span class="block font-bold text-sm text-gray-900">Bayar di Tempat</span>
+                                <span class="text-xs text-gray-500">Cash On Delivery (COD)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Detail Rekening / QR Code (Dinamis via JS) -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <!-- Konten Bank -->
+                    <div id="content-bank" class="space-y-6">
+                        <h4 class="font-bold text-gray-900 border-b border-gray-100 pb-3 text-lg">Rekening Tujuan Transfer</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs text-gray-400 font-semibold block">BANK BCA</span>
+                                    <strong class="text-base text-gray-800 tracking-wider">1234-5678-90</strong>
+                                    <span class="text-xs text-gray-500 block mt-0.5">a.n PT Geprek Hot Indonesia</span>
+                                </div>
+                                <button onclick="navigator.clipboard.writeText('1234567890'); alert('No. Rekening BCA disalin!')" class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 px-2.5 py-1.5 rounded-lg">Salin</button>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs text-gray-400 font-semibold block">BANK MANDIRI</span>
+                                    <strong class="text-base text-gray-800 tracking-wider">9876-5432-10</strong>
+                                    <span class="text-xs text-gray-500 block mt-0.5">a.n PT Geprek Hot Indonesia</span>
+                                </div>
+                                <button onclick="navigator.clipboard.writeText('9876543210'); alert('No. Rekening Mandiri disalin!')" class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 px-2.5 py-1.5 rounded-lg">Salin</button>
+                            </div>
+                        </div>
+                        <blockquote class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded-r-xl text-xs leading-relaxed">
+                            <strong>Catatan Penting:</strong> Mohon sertakan 3 digit terakhir nomor handphone Anda pada nominal transfer untuk mempermudah verifikasi otomatis oleh tim keuangan kami.
+                        </blockquote>
+                    </div>
+
+                    <!-- Konten QRIS -->
+                    <div id="content-qris" class="hidden space-y-6 text-center sm:text-left">
+                        <h4 class="font-bold text-gray-900 border-b border-gray-100 pb-3 text-lg text-left">Scan Kode QRIS Resmi</h4>
+                        <div class="flex flex-col sm:flex-row items-center gap-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <!-- Placeholder QR Code -->
+                            <div class="bg-white p-3 rounded-lg shadow-sm border border-gray-200">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GeprekHotPayment" alt="QRIS Geprek Hot" class="w-36 h-36 mx-auto">
+                            </div>
+                            <div class="space-y-2 text-sm max-w-sm">
+                                <p class="font-bold text-gray-800">Bisa di-scan menggunakan:</p>
+                                <p class="text-gray-600 text-xs leading-relaxed">GoPay, OVO, Dana, LinkAja, ShopeePay, serta seluruh aplikasi Mobile Banking (BCA Syariah, Livin, BRIMO, dll) yang mendukung pembayaran QRIS nasional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Konten COD -->
+                    <div id="content-cod" class="hidden space-y-4">
+                        <h4 class="font-bold text-gray-900 border-b border-gray-100 pb-3 text-lg">Metode Bayar di Tempat (COD)</h4>
+                        <div class="flex items-start gap-3 text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="text-amber-500 text-lg mt-0.5"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <p>Pembayaran dilakukan secara tunai kepada kurir kami saat makanan sampai di depan rumah Anda. Mohon siapkan <strong>uang pas</strong> untuk mempermudah proses transaksi kurir lapangan kami.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: INPUT NAMA & SUBMIT KONFIRMASI -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+                    <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3">Konfirmasi Transaksi</h3>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Atas Nama Pengirim/Pemesan</label>
+                        <input type="text" id="atas_nama" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm mb-4" required>
+                        
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Total Dana Yang Dibayar</label>
+                        <input type="text" id="nominal_bayar" placeholder="Contoh: 45000" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-red-500 focus:bg-white transition text-sm" required>
+                    </div>
+
+                    <button onclick="kirimKonfirmasi()" class="w-full bg-red-600 text-white font-bold py-3.5 rounded-xl hover:bg-red-700 transition text-sm shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> Kirim Bukti & Proses Pesanan
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-xs">
+        <p>&copy; 2026 Geprek Hot Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        let currentMethod = 'bank';
+
+        // Fungsi berganti tab metode pembayaran secara dinamis
+        function switchMethod(method) {
+            currentMethod = method;
+            
+            // Sembunyikan semua konten box detail terlebih dahulu
+            document.getElementById('content-bank').classList.add('hidden');
+            document.getElementById('content-qris').classList.add('hidden');
+            document.getElementById('content-cod').classList.add('hidden');
+
+            // Set styling label pembungkus radio button
+            const labels = document.querySelectorAll('main label');
+            labels.forEach(l => {
+                l.classList.remove('border-red-600', 'bg-red-50/50');
+                l.classList.add('border-gray-200');
+            });
+
+            // Tampilkan konten spesifik sesuai pilihan user
+            const checkedInput = document.querySelector(`input[value="${method}"]`);
+            const activeLabel = checkedInput.closest('label');
+            activeLabel.classList.remove('border-gray-200');
+            activeLabel.classList.add('border-red-600', 'bg-red-50/50');
+
+            document.getElementById(`content-${method}`).classList.remove('hidden');
+        }
+
+        // Fungsi penyusunan pesan WhatsApp konfirmasi pembayaran
+        function kirimKonfirmasi() {
+            const nama = document.getElementById('atas_nama').value.trim();
+            const nominal = document.getElementById('nominal_bayar').value.trim();
+
+            if (!nama || !nominal) {
+                alert('Mohon masukkan Nama Pemesan dan Nominal Transfer Anda.');
+                return;
+            }
+
+            let textWA = `*KONFIRMASI PEMBAYARAN - GEPREK HOT*\n\n`;
+            textWA += `Halo Admin, saya ingin mengonfirmasi pembayaran porsi makanan:\n`;
+            textWA += `• Nama Pemesan: ${nama}\n`;
+            textWA += `• Nominal Pembayaran: Rp ${parseInt(nominal).toLocaleString('id-ID')}\n`;
+            
+            if (currentMethod === 'bank') {
+                textWA += `• Metode Pilihan: Transfer Bank (BCA/Mandiri)\n\n`;
+                textWA += `Saya sudah melampirkan/akan mengirimkan foto struk bukti transfer sesaat setelah pesan ini terkirim.`;
+            } else if (currentMethod === 'qris') {
+                textWA += `• Metode Pilihan: Scan QRIS E-Wallet\n\n`;
+                textWA += `Dana sudah sukses terpotong di aplikasi saya. Mohon dicek mutasinya ya min!`;
+            } else {
+                textWA += `• Metode Pilihan: Cash On Delivery (COD)\n\n`;
+                textWA += `Saya memilih opsi bayar tunai di lokasi tujuan saat kurir mengantarkan barang.`;
+            }
+
+            const nomorAdmin = "628123456789"; // Sesuaikan dengan nomor WA tokomu
+            const linkWhatsApp = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(textWA)}`;
+            
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+
+</body>
+</html>

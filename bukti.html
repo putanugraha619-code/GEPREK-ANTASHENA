@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proses Pesanan & Kirim Bukti - Geprek Hot</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <span class="text-2xl font-extrabold text-red-600 tracking-wider">GEPREK<span class="text-amber-500">HOT</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8 font-semibold text-gray-600">
+                    <a href="index.html" class="hover:text-red-600 transition">Home</a>
+                    <a href="tentang.html" class="hover:text-red-600 transition">Tentang Kami</a>
+                    <a href="katalog.html" class="hover:text-red-600 transition">Menu</a>
+                    <a href="index.html#kemitraan" class="hover:text-red-600 transition">Kemitraan</a>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            
+            <!-- STATUS TOP BAR -->
+            <div class="bg-gradient-to-r from-red-600 to-amber-500 p-8 text-white text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4 animate-pulse">
+                    <i class="fa-solid fa-spinner text-2xl text-white animate-spin"></i>
+                </div>
+                <h1 class="text-2xl font-bold">Pesananmu Sedang Diproses!</h1>
+                <p class="text-sm text-amber-100 mt-1">ID Pesanan: <span class="font-mono font-bold">GPRK-92837</span></p>
+            </div>
+
+            <div class="p-6 sm:p-10 space-y-10">
+                
+                <!-- BAGIAN 1: UPLOAD BUKTI (INTERAKTIF) -->
+                <div id="upload-section" class="space-y-4">
+                    <div class="border-b border-gray-100 pb-3">
+                        <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                            <i class="fa-solid fa-cloud-arrow-up text-amber-500"></i> Unggah Bukti Pembayaran
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Format file yang didukung: JPG, PNG, atau PDF (Maks. 5MB)</p>
+                    </div>
+
+                    <!-- Area Dropzone -->
+                    <div class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center bg-gray-50/50 hover:bg-gray-50 transition relative" id="dropzone">
+                        <input type="file" id="file-input" onchange="previewFile()" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+                        <div id="upload-prompt" class="space-y-2">
+                            <i class="fa-solid fa-image text-3xl text-gray-300"></i>
+                            <p class="text-sm text-gray-600 font-medium">Klik atau seret foto struk transfer ke sini</p>
+                            <p class="text-xs text-gray-400">Bukti akan langsung divalidasi oleh admin kasir</p>
+                        </div>
+                        <!-- Elemen Preview -->
+                        <div id="upload-preview" class="hidden space-y-3">
+                            <i class="fa-solid fa-circle-check text-3xl text-emerald-500"></i>
+                            <p id="file-name" class="text-sm font-semibold text-gray-800"></p>
+                            <button onclick="hapusFile(event)" class="text-xs text-red-500 hover:underline font-semibold">Hapus & Ganti</button>
+                        </div>
+                    </div>
+
+                    <button onclick="submitBukti()" id="btn-submit-bukti" class="w-full bg-amber-500 text-white font-bold py-3.5 rounded-xl hover:bg-amber-600 transition text-sm shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Bukti ke Sistem Kasir
+                    </button>
+                </div>
+
+                <!-- BAGIAN 2: LIVE ORDER TRACKING TIMELINE -->
+                <div class="space-y-6 pt-2">
+                    <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-route text-red-600"></i> Status Antrean Dapur
+                    </h3>
+
+                    <!-- Alur Timeline -->
+                    <div class="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200">
+                        
+                        <!-- Step 1 (Selesai) -->
+                        <div class="relative flex items-start gap-4">
+                            <div class="absolute -left-[21px] bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">Pesanan Diterima</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">Sistem telah mencatat rincian geprek & level pedasmu.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 (Sedang Berjalan / Aktif) -->
+                        <div class="relative flex items-start gap-4" id="step-verifikasi">
+                            <div class="absolute -left-[21px] bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white" id="icon-verifikasi">
+                                <i class="fa-solid fa-circle animate-pulse text-[6px]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900" id="text-title-verifikasi">Menunggu Bukti Transfer</h4>
+                                <p class="text-xs text-gray-500 mt-0.5" id="text-desc-verifikasi">Silakan unggah struk di atas agar kasir bisa langsung mencocokkan mutasi bank.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 (Menunggu) -->
+                        <div class="relative flex items-start gap-4 opacity-50" id="step-masak">
+                            <div class="absolute -left-[21px] bg-gray-200 text-gray-400 rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white" id="icon-masak">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">Sedang Digoreng & Diulek</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">Ayam krispi digoreng dadakan dan dicabein sesuai level pilihanmu.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 (Menunggu) -->
+                        <div class="relative flex items-start gap-4 opacity-50" id="step-kirim">
+                            <div class="absolute -left-[21px] bg-gray-200 text-gray-400 rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white" id="icon-kirim">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">Siap Diambil / Kurir Meluncur</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">Makanan dikemas rapi dengan kotak antipanas dan siap meluncur ke alamatmu.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SELESAI / HUBUNGI BANTUAN -->
+                <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                    <div>
+                        <h4 class="font-bold text-sm text-gray-900">Ada kendala upload atau butuh respon kilat?</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Hubungi CS pusat jika status antrean tidak berubah dalam 10 menit.</p>
+                    </div>
+                    <a href="https://wa.me/628123456789?text=Halo%20Admin%20Geprek%20Hot,%20saya%20mau%20tanya%20status%20pesanan%20GPRK-92837" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-sm flex items-center gap-1.5 shrink-0">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Tanya CS Dapur
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-xs">
+        <p>&copy; 2026 Geprek Hot Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <!-- INTERACTIVE TRACKER LOGIC -->
+    <script>
+        // Preview file ketika user memilih gambar struk
+        function previewFile() {
+            const fileInput = document.getElementById('file-input');
+            const prompt = document.getElementById('upload-prompt');
+            const preview = document.getElementById('upload-preview');
+            const fileName = document.getElementById('file-name');
+
+            if (fileInput.files.length > 0) {
+                prompt.classList.add('hidden');
+                preview.classList.remove('hidden');
+                fileName.innerText = fileInput.files[0].name;
+            }
+        }
+
+        // Hapus file terpilih
+        function hapusFile(event) {
+            event.preventDefault(); // cegah klik ganda pada input file di belakangnya
+            const fileInput = document.getElementById('file-input');
+            const prompt = document.getElementById('upload-prompt');
+            const preview = document.getElementById('upload-preview');
+            
+            fileInput.value = ""; // Reset value
+            preview.classList.add('hidden');
+            prompt.classList.remove('hidden');
+        }
+
+        // Simulasi pengiriman bukti dan perubahan status timeline secara real-time
+        function submitBukti() {
+            const fileInput = document.getElementById('file-input');
+            if (fileInput.files.length === 0) {
+                alert('Silakan pilih atau masukkan foto struk bukti transfer terlebih dahulu.');
+                return;
+            }
+
+            // Ganti tombol menjadi status sukses terkirim
+            const btnSubmit = document.getElementById('btn-submit-bukti');
+            btnSubmit.disabled = true;
+            btnSubmit.className = "w-full bg-emerald-600 text-white font-bold py-3.5 rounded-xl text-sm shadow-md flex items-center justify-center gap-2 cursor-not-allowed";
+            btnSubmit.innerHTML = `<i class="fa-solid fa-circle-check"></i> Bukti Sukses Terkirim!`;
+
+            // Ubah Status Step 2 Menjadi Berhasil Diverifikasi
+            document.getElementById('icon-verifikasi').className = "absolute -left-[21px] bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white";
+            document.getElementById('icon-verifikasi').innerHTML = `<i class="fa-solid fa-check"></i>`;
+            document.getElementById('text-title-verifikasi').innerText = "Pembayaran Diverifikasi";
+            document.getElementById('text-desc-verifikasi').innerText = "Kasir berhasil mencocokkan dana masuk. Antrean diteruskan ke dapur.";
+
+            // Simulasi 2 Detik Kemudian: Dapur mulai memasak (Step 3 Aktif)
+            setTimeout(() => {
+                const stepMasak = document.getElementById('step-masak');
+                stepMasak.classList.remove('opacity-50');
+                
+                const iconMasak = document.getElementById('icon-masak');
+                iconMasak.className = "absolute -left-[21px] bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] ring-4 ring-white";
+                iconMasak.innerHTML = `<i class="fa-solid fa-fire animate-pulse"></i>`;
+                
+                alert('Kabar Baik! Kasir mengonfirmasi dana Anda. Koki dapur kami sekarang sedang menggoreng pesanan ayam krispimu!');
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
